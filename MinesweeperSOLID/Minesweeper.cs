@@ -1,5 +1,5 @@
 ﻿using System;
 
-namespace MinesweeperSOLID
+namespace MinesweeperTests
 {
 }
