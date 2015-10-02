@@ -22,32 +22,38 @@ namespace ConsoleApplication1
         {
             var input = m_mineSequenceProvider.GetSequence();
 
-            var chars = input.ToCharArray();
+            var result = new char[input.Length];
 
-            var result = new char[chars.Length];
-
-            for (var i = 0; i < chars.Length; ++i)
+            for (var i = 0; i < input.Length; ++i)
             {
-                if (IsMine(chars[i]))
-                {
-                    result[i] = '*';
-                    continue;
-                }
-
-                int count = 0;
-                if (i > 0 && IsMine(chars[i - 1]))
-                {
-                    count ++;
-                }
-                if (i < chars.Length - 1 && IsMine(chars[i + 1]))
-                {
-                    count ++;
-                }
-
-                result[i] = count.ToString()[0];
+                result[i] = IndexCounter.CountAtIndex(input, i);
             }
 
             m_resultHandler.HandleResult(new string(result));
+        }
+    }
+
+
+    public class IndexCounter
+    {
+        public static char CountAtIndex(string chars, int i)
+        {
+            if (IsMine(chars[i]))
+            {
+                return '*';
+            }
+
+            int count = 0;
+            if (i > 0 && IsMine(chars[i - 1]))
+            {
+                count++;
+            }
+            if (i < chars.Length - 1 && IsMine(chars[i + 1]))
+            {
+                count++;
+            }
+
+            return count.ToString()[0];
         }
 
         private static bool IsMine(char character)

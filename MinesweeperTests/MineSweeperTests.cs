@@ -32,5 +32,14 @@ namespace MinesweeperTests
 
             return result;
         }
+
+        [TestCase("..*..", 3, Result = '1')]
+        public char TestCountForIndex(string input, int index)
+        {
+            var sequenceProvider = new Mock<IMineSequenceProvider>();
+            sequenceProvider.Setup(x => x.GetSequence()).Returns(input);
+
+            return IndexCounter.CountAtIndex(input, index);
+        }
     }
 }
