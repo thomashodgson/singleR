@@ -1,0 +1,5 @@
+C:\Users\Thomas.Hodgson\documents\visual studio 2013\Projects\MinesweeperSOLID\MinesweeperSOLID\bin\Debug\MinesweeperSOLID.dll
+C:\Users\Thomas.Hodgson\documents\visual studio 2013\Projects\MinesweeperSOLID\MinesweeperSOLID\bin\Debug\MinesweeperSOLID.pdb
+C:\Users\Thomas.Hodgson\documents\visual studio 2013\Projects\MinesweeperSOLID\MinesweeperSOLID\obj\Debug\MinesweeperSOLID.csprojResolveAssemblyReference.cache
+C:\Users\Thomas.Hodgson\documents\visual studio 2013\Projects\MinesweeperSOLID\MinesweeperSOLID\obj\Debug\MinesweeperSOLID.dll
+C:\Users\Thomas.Hodgson\documents\visual studio 2013\Projects\MinesweeperSOLID\MinesweeperSOLID\obj\Debug\MinesweeperSOLID.pdb
