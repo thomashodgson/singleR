@@ -22,8 +22,8 @@ namespace MinesweeperTests
         {
             string result = null;
 
-            var sequenceProvider = new Mock<IMineSequenceProvider>();
-            sequenceProvider.Setup(x => x.GetSequence()).Returns(input);
+            var sequenceProvider = new Mock<IBoardProvider>();
+            sequenceProvider.Setup(x => x.GetBoard()).Returns(new Board(input));
             
             var resultHandler = new Mock<IResultHandler>();
             resultHandler.Setup(x => x.HandleResult(It.IsAny<string>())).Callback<string>(s => result = s);
@@ -36,10 +36,12 @@ namespace MinesweeperTests
         [TestCase("..*..", 3, Result = '1')]
         public char TestCountForIndex(string input, int index)
         {
-            var sequenceProvider = new Mock<IMineSequenceProvider>();
-            sequenceProvider.Setup(x => x.GetSequence()).Returns(input);
+            var sequenceProvider = new Mock<IBoardProvider>();
+            sequenceProvider.Setup(x => x.GetBoard()).Returns(new Board(input));
 
-            return IndexCounter.CountAtIndex(input, index);
+            return IndexCounter.CountAtIndex(new Board(input), index);
         }
+
     }
+
 }

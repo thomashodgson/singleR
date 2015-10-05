@@ -4,12 +4,12 @@ namespace ConsoleApplication1
 {
     public class Program
     {
-        private readonly IMineSequenceProvider m_mineSequenceProvider;
+        private readonly IBoardProvider m_boardProvider;
         private readonly IResultHandler m_resultHandler;
 
-        public Program(IMineSequenceProvider mineSequenceProvider, IResultHandler resultHandler)
+        public Program(IBoardProvider boardProvider, IResultHandler resultHandler)
         {
-            m_mineSequenceProvider = mineSequenceProvider;
+            m_boardProvider = boardProvider;
             m_resultHandler = resultHandler;
         }
 
@@ -20,45 +20,39 @@ namespace ConsoleApplication1
 
         public void Run()
         {
-            var input = m_mineSequenceProvider.GetSequence();
+            var board = m_boardProvider.GetBoard();
 
-            var result = new char[input.Length];
+            var result = "";
 
-            for (var i = 0; i < input.Length; ++i)
+            for (var i = 0; i < board.Size; ++i)
             {
-                result[i] = IndexCounter.CountAtIndex(input, i);
+                result = result + IndexCounter.CountAtIndex(board, i);
             }
 
-            m_resultHandler.HandleResult(new string(result));
+            m_resultHandler.HandleResult(result);
         }
     }
 
-
     public class IndexCounter
     {
-        public static char CountAtIndex(string chars, int i)
+        public static char CountAtIndex(Board board, int i)
         {
-            if (IsMine(chars[i]))
+            if (board.IsMine(i))
             {
                 return '*';
             }
 
-            int count = 0;
-            if (i > 0 && IsMine(chars[i - 1]))
+            var count = 0;
+            if (board.IsMine(i - 1))
             {
                 count++;
             }
-            if (i < chars.Length - 1 && IsMine(chars[i + 1]))
+            if (board.IsMine(i + 1))
             {
                 count++;
             }
 
             return count.ToString()[0];
-        }
-
-        private static bool IsMine(char character)
-        {
-            return character == '*';
         }
     }
 
@@ -70,11 +64,11 @@ namespace ConsoleApplication1
         }
     }
 
-    internal class ReadFromConsoleProvider : IMineSequenceProvider
+    internal class ReadFromConsoleProvider : IBoardProvider
     {
-        public string GetSequence()
+        public Board GetBoard()
         {
-            return Console.ReadLine();
+            return new Board(Console.ReadLine());
         }
     }
 
@@ -83,8 +77,26 @@ namespace ConsoleApplication1
         void HandleResult(string result);
     }
 
-    public interface IMineSequenceProvider
+    public interface IBoardProvider
     {
-        string GetSequence();
+        Board GetBoard();
+    }
+
+    public class Board
+    {
+        private readonly string m_input;
+
+        public Board(string input)
+        {
+            m_input = input;
+            Size = input.Length;
+        }
+
+        public int Size { get; set; }
+
+        public bool IsMine(int i)
+        {
+            return i > -1 && i < Size && m_input[i] == '*';
+        }
     }
 }
